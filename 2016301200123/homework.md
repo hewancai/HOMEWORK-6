@@ -1,3 +1,10 @@
+# 第三章
+
+参考课本及课件，受“TCP拥塞控制的FSM描述”启发，采用状态机模式，编写TCP拥塞控制演示程序。
+
+程序主体包括模拟器类、三个状态类及其父类，模拟FSM的运作，模拟器类对象接收字符串列表作为输入事件，以pandas的DataFrame记录cwnd、ssthresh，最后利用seaborn(matplotlib)绘图：
+
+```python
 from abc import ABC, abstractmethod
 from matplotlib import pyplot as plt
 import numpy as np
@@ -32,7 +39,7 @@ class BaseState(ABC):
     @abstractmethod
     def act_timeout(self):
         pass
-    
+
 
 class SlowStartState(BaseState):
     '''慢启动状态类'''
@@ -165,3 +172,8 @@ def main():
 
 if __name__ == "__main__":
     main()
+```
+
+以下以报文段为单位。初始cwnd为1，ssthresh为16，输入事件依次为：9次new ACK、3次duplicate ACK、38次new ACK、1次timeout、5次new ACK，演示结果如下：
+
+<img src="static/trending.png">
